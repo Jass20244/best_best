@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Callback Page</title>
+    <title>Callback</title>
+    <script>
+        // Function to extract the authorization code from the URL
+        function getAuthorizationCode() {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            if (code) {
+                document.getElementById('message').innerText = "Authorization code received!";
+                // Post the code back to the mobile app
+                window.location.href = `yourappscheme://callback?code=${code}`;
+            } else {
+                document.getElementById('message').innerText = "Authorization code not found.";
+            }
+        }
+    </script>
 </head>
-<body>
+<body onload="getAuthorizationCode()">
     <h1>Callback Page</h1>
-    <p>If you see this page, the redirect was successful!</p>
+    <p id="message">Processing...</p>
 </body>
 </html>
